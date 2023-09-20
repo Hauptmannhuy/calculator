@@ -1,17 +1,17 @@
-const buttons = document.querySelectorAll('button');
+const numbers = document.querySelectorAll('.number');
+const operators = document.querySelectorAll('.specSymbol')
 let output = document.getElementById('display');
-let displayValue;
 let firstNumber='';
 let secondNumber='';
 let operator='';
-let operandStatus = false;
+let operatorStatus = false;
 let result;
 function add(a,b){
-return a+b;
+    return a*1+b*1;
 }
 
 function subtract(a,b){
-    return a-b;
+    return a*1-b*1;
 }
 
 function multiply(a,b){
@@ -22,115 +22,64 @@ function divide(a,b){
 }
 
 function operate(operator,a,b){
-    //pseudocode
-    //if operator === + then function add()
-    // if operator === / then function divide()
+    if (operator === '+'){
+      result = add(a,b);
+      
+    }
+    else if (operator === '-'){
+      result = subtract(a,b);
+    }
+    else if (operator === '*'){
+      result = multiply(a,b);
+    }
+    else if (operator === '/'){
+        result = divide(a,b);
+        
+    }
 }
 
-buttons.forEach((button)=>{
-    button.addEventListener('click', (e)=>{
+numbers.forEach((number)=>{
+    number.addEventListener('click', (e)=>{
         let target = e.target;
-       
-       
-        if (target.id === 'one-Btn'){
-            if (operandStatus === true){
-                secondNumber+='1';
-            }
-            else {
-                firstNumber+='1';
-            }
+        
+        if (operatorStatus === true){
+            secondNumber+= target.id;
         }
-        if (target.id === 'two-Btn'){
-            if (operandStatus === true){
-                secondNumber+='2';
-            }
-            else {
-                firstNumber+='2';
-            }
+        else {
+            firstNumber+=target.id;
         }
-        if (target.id === 'three-Btn'){
-            if (operandStatus === true){
-                secondNumber+='3';
-            }
-            else {
-                firstNumber+='3';
-            }
+        console.log('first',firstNumber,firstNumber.length);
+        console.log('second',secondNumber,secondNumber.length);
+        
+    })
+})
+
+operators.forEach((element)=>{
+    element.addEventListener('click', (e)=>{
+        let target = e.target;
+        let operatorPair = '';
+        if (('*/+-').includes(target.id) && firstNumber.length > 0 && secondNumber.length > 0){
+            operatorPair = target.id;
+            operate(operatorPair,firstNumber,secondNumber);
+            firstNumber = result.toString();
+            secondNumber = '';
+            console.log('if more than one pair', firstNumber)
         }
-        if (target.id === 'four-Btn'){
-            if (operandStatus === true){
-                secondNumber+='4';
-            }
-            else {
-                firstNumber+='4';
-            }
-        }
-        if (target.id === 'five-Btn'){
-            if (operandStatus === true){
-                secondNumber+='5';
-            }
-            else {
-                firstNumber+='5';
-            }
-        }
-        if (target.id === 'six-Btn'){
-            if (operandStatus === true){
-                secondNumber+='6';
-            }
-            else {
-                firstNumber+='6';
-            }
-        }
-        if (target.id === 'seven-Btn'){
-            if (operandStatus === true){
-                secondNumber+='7';
-            }
-            else {
-                firstNumber+='7';
-            }
-        }
-        if (target.id === 'eight-Btn'){
-            if (operandStatus === true){
-                secondNumber+='8';
-            }
-            else {
-                firstNumber+='8';
-            }
-        }
-        if (target.id === 'nine-Btn'){
-            if (operandStatus === true){
-                secondNumber+='9';
-            }
-            else {
-                firstNumber+='9';
-            }
-        }
-        if (target.id === 'zero-Btn'){
-            if (operandStatus === true){
-                secondNumber+='0';
-            }
-            else {
-                firstNumber+='1';
-            }
-        }
-        if (target.id === 'plus-Btn'){
-            operandStatus = true;
-            operator = '+'
-        }
-        if (target.id === 'minus-Btn'){
-            operandStatus = true;
-            operator = '-'
-        }
-        if (target.id === 'divide-Btn'){
-            operandStatus = true;
-            operator = '/'
-        }
-        if (target.id === 'multiply-Btn'){
-            operandStatus = true;
-            operator = '*'
-        }
-        if (target.id === 'equal-Btn'){
-            operandStatus = false;
+        else {
+            if (target.id === '='){
             operate(operator,firstNumber,secondNumber);
+            operatorStatus = false;
+            firstNumber = '';
+            secondNumber= '';
+            console.log(result);
         }
+        else {
+            operator = target.id;
+            operatorStatus = true;
+        }
+        console.log(operatorStatus)
+        }
+        
+        
     })
 })
