@@ -44,9 +44,11 @@ numbers.forEach((number)=>{
         
         if (operatorStatus === true){
             secondNumber+= target.id;
+            output.textContent = secondNumber;
         }
         else {
             firstNumber+=target.id;
+            output.textContent = firstNumber;
         }
         console.log('first',firstNumber,firstNumber.length);
         console.log('second',secondNumber,secondNumber.length);
@@ -54,32 +56,41 @@ numbers.forEach((number)=>{
     })
 })
 
-operators.forEach((element)=>{
-    element.addEventListener('click', (e)=>{
+operators.forEach((element) => {
+    element.addEventListener('click', (e) => {
         let target = e.target;
-        let operatorPair = '';
-        if (('*/+-').includes(target.id) && firstNumber.length > 0 && secondNumber.length > 0){
-            operatorPair = target.id;
-            operate(operatorPair,firstNumber,secondNumber);
-            firstNumber = result.toString();
-            secondNumber = '';
-            console.log('if more than one pair', firstNumber)
-        }
-        else {
-            if (target.id === '='){
-            operate(operator,firstNumber,secondNumber);
-            operatorStatus = false;
-            firstNumber = '';
-            secondNumber= '';
-            console.log(result);
-        }
-        else {
+        
+        if ('*/+-'.includes(target.id)) {
+            if (firstNumber.length > 0 && secondNumber.length > 0) {
+                // Perform calculation for the previous operator
+                operate(operator, firstNumber, secondNumber);
+                firstNumber = result.toString();
+                secondNumber = '';
+                output.textContent = firstNumber;
+            }
+            // Set the current operator
             operator = target.id;
             operatorStatus = true;
-        }
-        console.log(operatorStatus)
-        }
+        } else if (target.id === '=') {
+            if (firstNumber.length > 0 && secondNumber.length > 0) {
+                // Perform calculation for the current operator
+                operate(operator, firstNumber, secondNumber);
+                operatorStatus = false;
+                firstNumber = ''
+                secondNumber = ''
+            
+                console.log(result)
+               if (result %1 !== 0){
+                output.textContent = result.toFixed(3)
+               
+               }
+               else {
+                output.textContent = result;
+               }
+            }
+        } 
         
         
-    })
-})
+        console.log('Operator:', operator);
+    });
+});
