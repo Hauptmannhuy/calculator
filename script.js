@@ -89,6 +89,12 @@ operators.forEach((element) => {
                }
             }
         } 
+        else if (target.id === 'clear-Btn'){
+            output.innerHTML = '';
+        }
+        else if (target.id === 'delete-Btn'){
+            output.textContent= output.textContent.slice(0,-1);
+        }
         
         
         console.log('Operator:', operator);
