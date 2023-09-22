@@ -1,11 +1,13 @@
 const numbers = document.querySelectorAll('.number');
 const operators = document.querySelectorAll('.specSymbol')
 let output = document.getElementById('display');
+let dot = document.getElementById('.')
 let firstNumber='';
 let secondNumber='';
 let operator='';
 let operatorStatus = false;
 let result;
+let dotDisabled = false;
 function add(a,b){
     return a*1+b*1;
 }
@@ -43,12 +45,28 @@ numbers.forEach((number)=>{
         let target = e.target;
         
         if (operatorStatus === true){
-            secondNumber+= target.id;
-            output.textContent = secondNumber;
+            if (target.id === '.'){
+                if (!dotDisabled){
+                    secondNumber+=target.id;
+                    dotDisabled=true;
+                }
+            }
+            else {
+                secondNumber+= target.id;
+                output.textContent = secondNumber;
+            }
         }
         else {
-            firstNumber+=target.id;
-            output.textContent = firstNumber;
+           if (target.id === '.'){
+            if (!dotDisabled){
+                firstNumber+= target.id;
+                dotDisabled = true;
+            }
+           }
+           else {
+               firstNumber+=target.id;
+               output.textContent = firstNumber;
+           }
         }
         console.log('first',firstNumber,firstNumber.length);
         console.log('second',secondNumber,secondNumber.length);
@@ -59,7 +77,7 @@ numbers.forEach((number)=>{
 operators.forEach((element) => {
     element.addEventListener('click', (e) => {
         let target = e.target;
-        
+        dotDisabled = false;
         if ('*/+-'.includes(target.id)) {
             if (firstNumber.length > 0 && secondNumber.length > 0) {
                 // Perform calculation for the previous operator
@@ -100,3 +118,25 @@ operators.forEach((element) => {
         console.log('Operator:', operator);
     });
 });
+
+// function dotCheck(){
+//     let displayVal = output.textContent;
+//     for (let i = 0; i < displayVal.length; i++){
+//         if (displayVal.length === 0){
+//             dotDisabled = true;
+//             break;
+//         }
+//         else if ('1234567890'.includes(displayVal[i])){
+//             dotDisabled = false;
+//             break;
+//         }
+//         else if (displayVal[i] === '.'){
+//             dotDisabled = true;
+//             break;
+//         }
+//         else if (displayVal[i] === '+' || displayVal[i] === '-' || displayVal[i] === '/' || displayVal[i] === '*' || displayVal[i] === '=' ){
+//             dotDisabled = false;
+//             break;
+//         }
+//     }
+// }
