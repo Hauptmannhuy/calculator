@@ -3,7 +3,6 @@ const operators = document.querySelectorAll('.specSymbol')
 const outputControl = document.querySelectorAll('.clear')
 let currentOperation = document.getElementById('current-operation');
 let lastOperation = document.getElementById('last-operation');
-// let output = document.getElementById('display');
 let dot = document.getElementById('.');
 let firstNumber='';
 let secondNumber='';
@@ -143,4 +142,3 @@ outputControl.forEach((button)=>{
     })
 })
 
-//

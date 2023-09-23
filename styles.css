@@ -1,4 +1,9 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Mooli&family=Roboto:ital,wght@0,300;0,400;1,100;1,300&display=swap');
+body{
+    font-family: 'Mooli', sans-serif;
+}
+main {
+
     display: flex;
     justify-content: center;
     height: 85vh;
@@ -76,4 +81,13 @@ padding: 1px;
 #last-operation {
 font-size: 18px;
 padding: 1px;
+}
+
+#footer {
+    display: flex;
+    margin-top: 30px;
+    font-size: 24px;
+   justify-content: center;
+   gap: 5px;
+   
 }
