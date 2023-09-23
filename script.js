@@ -94,6 +94,7 @@ operators.forEach((element) => {
             }
             // Set the current operator
             operator = target.id;
+            lastOperation.textContent = `${firstNumber} ${operator}`
             operatorStatus = true;
         } else if (target.id === '=') {
             if (firstNumber.length > 0 && secondNumber.length > 0) {
