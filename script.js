@@ -137,7 +137,7 @@ outputControl.forEach((button)=>{
             else {
                firstNumber = firstNumber.slice(0,-1);
             }
-            currentOperation.textContent= output.textContent.slice(0,-1);
+            currentOperation.textContent= currentOperation.textContent.slice(0,-1);
         }
     })
 })
