@@ -1,13 +1,18 @@
 const numbers = document.querySelectorAll('.number');
 const operators = document.querySelectorAll('.specSymbol')
-let output = document.getElementById('display');
-let dot = document.getElementById('.')
+const outputControl = document.querySelectorAll('.clear')
+let currentOperation = document.getElementById('current-operation');
+let lastOperation = document.getElementById('last-operation');
+// let output = document.getElementById('display');
+let dot = document.getElementById('.');
 let firstNumber='';
 let secondNumber='';
 let operator='';
 let operatorStatus = false;
 let result;
 let dotDisabled = false;
+let firstNumberRes = '';
+let secondNumberRes = '';
 function add(a,b){
     return a*1+b*1;
 }
@@ -48,24 +53,26 @@ numbers.forEach((number)=>{
             if (target.id === '.'){
                 if (!dotDisabled){
                     secondNumber+=target.id;
+                    currentOperation.textContent = firstNumber;
                     dotDisabled=true;
                 }
             }
             else {
                 secondNumber+= target.id;
-                output.textContent = secondNumber;
+                currentOperation.textContent = secondNumber;
             }
         }
         else {
            if (target.id === '.'){
             if (!dotDisabled){
                 firstNumber+= target.id;
+                currentOperation.textContent = firstNumber;
                 dotDisabled = true;
             }
            }
            else {
                firstNumber+=target.id;
-               output.textContent = firstNumber;
+               currentOperation.textContent = firstNumber;
            }
         }
         console.log('first',firstNumber,firstNumber.length);
@@ -84,7 +91,7 @@ operators.forEach((element) => {
                 operate(operator, firstNumber, secondNumber);
                 firstNumber = result.toString();
                 secondNumber = '';
-                output.textContent = firstNumber;
+                lastOperation.textContent = `${firstNumber} ${operator}`;
             }
             // Set the current operator
             operator = target.id;
@@ -94,49 +101,46 @@ operators.forEach((element) => {
                 // Perform calculation for the current operator
                 operate(operator, firstNumber, secondNumber);
                 operatorStatus = false;
+                firstNumberRes = firstNumber;
+                secondNumberRes = secondNumber;
                 firstNumber = ''
                 secondNumber = ''
             
                 console.log(result)
                if (result %1 !== 0){
-                output.textContent = result.toFixed(3)
+                lastOperation.textContent = `${firstNumberRes}${operator}${secondNumberRes}=${result.toFixed(3)} `
                
                }
                else {
-                output.textContent = result;
+                lastOperation.textContent = `${firstNumberRes}${operator}${secondNumberRes}=${result} `;
                }
             }
         } 
-        else if (target.id === 'clear-Btn'){
-            output.innerHTML = '';
-        }
-        else if (target.id === 'delete-Btn'){
-            output.textContent= output.textContent.slice(0,-1);
-        }
         
         
         console.log('Operator:', operator);
     });
 });
 
-// function dotCheck(){
-//     let displayVal = output.textContent;
-//     for (let i = 0; i < displayVal.length; i++){
-//         if (displayVal.length === 0){
-//             dotDisabled = true;
-//             break;
-//         }
-//         else if ('1234567890'.includes(displayVal[i])){
-//             dotDisabled = false;
-//             break;
-//         }
-//         else if (displayVal[i] === '.'){
-//             dotDisabled = true;
-//             break;
-//         }
-//         else if (displayVal[i] === '+' || displayVal[i] === '-' || displayVal[i] === '/' || displayVal[i] === '*' || displayVal[i] === '=' ){
-//             dotDisabled = false;
-//             break;
-//         }
-//     }
-// }
+outputControl.forEach((button)=>{
+    button.addEventListener('click', (e)=>{
+        let target = e.target;
+         if (target.id === 'clear-Btn'){
+            currentOperation.innerHTML = '';
+            lastOperation.innerHTML = '';
+            firstNumber = '';
+            secondNumber = '';
+        }
+        else if (target.id === 'delete-Btn'){
+            if (operatorStatus === true){
+               secondNumber = secondNumber.slice(0,-1);
+            }
+            else {
+               firstNumber = firstNumber.slice(0,-1);
+            }
+            currentOperation.textContent= output.textContent.slice(0,-1);
+        }
+    })
+})
+
+//
