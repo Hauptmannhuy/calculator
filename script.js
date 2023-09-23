@@ -52,7 +52,7 @@ numbers.forEach((number)=>{
             if (target.id === '.'){
                 if (!dotDisabled){
                     secondNumber+=target.id;
-                    currentOperation.textContent = firstNumber;
+                    currentOperation.textContent = secondNumber;
                     dotDisabled=true;
                 }
             }
